@@ -1,0 +1,22 @@
+%Polar NRZ generation
+n=[1 0 1 1 0]
+k=1;
+t=0:0.01:length(n)
+for i=1:length(n)
+    if n(i)==1;
+        n(i)=2
+    else
+        n(i)=-2
+    end
+end
+for j=1:length(t)
+    if t(j)<=k
+        y(j)=n(k)
+    else
+        y(j)=n(k)
+        k=k+1
+    end
+end
+
+plot(t,y);
+axis([0,length(n),-3,3])

@@ -1,0 +1,44 @@
+close all;
+clc;
+%Mapping:
+n = [1 0 1 0 1];
+for m = 1 : length(n)
+    if n(m) == 0
+        nn(m) = -1;
+    else
+        nn(m) = 1;
+    end
+end
+%Pulse Shaping:
+i = 1;
+t = 0:0.01:length(n);
+for j = 1 : length(t)
+    if t(j) <= i
+        y(j) = nn(i);
+    else
+        i = i+1;
+        y(j) = nn(i);
+    end
+end
+
+%Carrier Frequency:
+c = 4.*sin(2*pi*2*t);
+subplot(3,1,2);
+plot(t,c);
+
+%Modulation:
+bpsk = y.*c;
+subplot(3,1,1);
+plot(t,bpsk,'r');
+
+%Demodulation:
+for j = 1 : length(t)
+    if c(j) == bpsk(j)
+        k(j) = 1;
+    else
+        k(j) = 0;
+    end
+end
+subplot(3,1,3);
+plot(t,k,'r');
+axis([0 length(n) -1 2]);

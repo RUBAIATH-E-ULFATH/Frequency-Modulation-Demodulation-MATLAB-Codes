@@ -1,0 +1,41 @@
+n = [1 0 1 1 0];
+i = 1;
+t = 0:0.01:length(n);
+%Mapping:
+for j = 1:length(t)
+    if t(j) <= i
+        y(j) = n(i);
+    else
+        y(j) = n(i);
+        i = i+1;
+    end 
+end
+
+%Carrier Signal:
+y1 = 4.*sin(2*pi*2*t);
+y2 = 4.*sin(2*pi*4*t);
+
+%Modulation:
+for j =1:length(t)
+    if y(j) == 1
+        z(j) = y1(j);
+    else
+         z(j) = y2(j);
+    end
+end
+subplot(3,1,1);
+plot(t,z);
+title('Modulated Signal');
+
+%Demodulation:
+for j =1:length(t)
+    if z(j) == y1(j)
+        k(j) = 1;
+    else
+        k(j) = 0;
+    end
+end
+subplot(3,1,2);
+plot(t,k,'r');
+axis([0 length(n) -2 2]);  
+title('Demodulated Signal');
